@@ -2,6 +2,7 @@ import time
 import uuid
 
 from google.appengine.api import memcache
+from exceptions import TimeoutException
 
 
 class UUIDLock(object):
@@ -40,7 +41,7 @@ class UUIDLock(object):
             time.sleep(.1)
             self.count += 1
             if self.count > self.wait_interval:
-                raise Exception('Timeout')
+                raise TimeoutException('Timeout')
 
     def release(self):
         self._release()
